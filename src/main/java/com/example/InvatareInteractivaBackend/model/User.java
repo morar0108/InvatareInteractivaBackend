@@ -13,7 +13,10 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 
 @Entity
 @Table(name = "`User`")
@@ -69,6 +72,9 @@ public class User {
 
     @Column(name = "token", length = 400)
     private String token;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Category> categories = new ArrayList<>();
 
 
     @Override
