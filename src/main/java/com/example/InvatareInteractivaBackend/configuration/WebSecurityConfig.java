@@ -1,5 +1,6 @@
 package com.example.InvatareInteractivaBackend.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,7 +8,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.List;
 
 @EnableWebSecurity
@@ -28,6 +32,11 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/users").permitAll()
                 .antMatchers(HttpMethod.POST, "/user/checkUser").permitAll()
                 .antMatchers(HttpMethod.POST, "/user/checkPass").permitAll()
+                .antMatchers(HttpMethod.GET, "/getAllUsers").permitAll()
+                .antMatchers(HttpMethod.GET, "/sticky-notes").permitAll()
+                .antMatchers(HttpMethod.POST, "/saveStickyNote").permitAll()
+                .antMatchers(HttpMethod.PUT, "/{id}").permitAll()
+                .antMatchers(HttpMethod.GET, "/{id}").permitAll()
                 .anyRequest().authenticated();
         http.cors().configurationSource(request -> {
             CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -43,5 +52,6 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             return corsConfiguration;
         });
     }
+
 }
 

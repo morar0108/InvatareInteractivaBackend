@@ -1,5 +1,6 @@
 package com.example.InvatareInteractivaBackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +25,7 @@ public class Category {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StickyNote> stickyNotes = new ArrayList<>();
 

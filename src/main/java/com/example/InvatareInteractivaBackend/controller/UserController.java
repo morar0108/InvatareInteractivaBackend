@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 
 @CrossOrigin(origins = "*", originPatterns = "*", allowedHeaders = "*")
@@ -22,8 +20,6 @@ public class UserController {
 
     private TokenService tokenService;
     private final UserService userService;
-
-
 
     @Autowired
     public UserController(UserService userService, TokenService tokenService){

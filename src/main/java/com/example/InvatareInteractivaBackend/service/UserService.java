@@ -9,8 +9,6 @@ import com.example.InvatareInteractivaBackend.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -236,7 +234,6 @@ public class UserService {
     }
 
     private String getJWTToken(String username) {
-        Set<String> permissionSet = new HashSet<>();
         User user = findUserByUsername(username);
         String secretKey = "mySecretKey";
         String token = Jwts

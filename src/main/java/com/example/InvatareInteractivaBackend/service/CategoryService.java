@@ -19,6 +19,8 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
+    public Category getCategoryByTitle(String name){return categoryRepository.findByName(name);}
+
     public Optional<Category> getCategoryById(Long id) {
         return categoryRepository.findById(id);
     }

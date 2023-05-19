@@ -73,6 +73,7 @@ public class User {
     @Column(name = "token", length = 400)
     private String token;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Category> categories = new ArrayList<>();
 

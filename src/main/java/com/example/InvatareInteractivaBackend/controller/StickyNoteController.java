@@ -10,19 +10,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*", originPatterns = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api/sticky-notes")
 public class StickyNoteController {
 
     @Autowired
     private StickyNoteService stickyNoteService;
 
-    @GetMapping
+    @CrossOrigin("*")
+    @GetMapping("/sticky-notes")
     public ResponseEntity<List<StickyNote>> getAllStickyNotes() {
         List<StickyNote> stickyNotes = stickyNoteService.getAllStickyNotes();
         return new ResponseEntity<>(stickyNotes, HttpStatus.OK);
     }
 
+    @CrossOrigin("*")
     @GetMapping("/{id}")
     public ResponseEntity<StickyNote> getStickyNoteById(@PathVariable Long id) {
         Optional<StickyNote> stickyNote = stickyNoteService.getStickyNoteById(id);
@@ -33,12 +35,14 @@ public class StickyNoteController {
         }
     }
 
-    @PostMapping
+    @CrossOrigin("*")
+    @PostMapping("/saveStickyNote")
     public ResponseEntity<StickyNote> saveStickyNote(@RequestBody StickyNote stickyNote) {
         StickyNote savedStickyNote = stickyNoteService.saveStickyNote(stickyNote);
         return new ResponseEntity<>(savedStickyNote, HttpStatus.CREATED);
     }
 
+    @CrossOrigin("*")
     @PutMapping("/{id}")
     public ResponseEntity<StickyNote> updateStickyNote(@PathVariable Long id, @RequestBody StickyNote stickyNote) {
         Optional<StickyNote> existingStickyNote = stickyNoteService.getStickyNoteById(id);
@@ -51,6 +55,7 @@ public class StickyNoteController {
         }
     }
 
+    @CrossOrigin("*")
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteStickyNoteById(@PathVariable Long id) {
         Optional<StickyNote> existingStickyNote = stickyNoteService.getStickyNoteById(id);
