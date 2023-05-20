@@ -37,6 +37,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/saveStickyNote").permitAll()
                 .antMatchers(HttpMethod.PUT, "/{id}").permitAll()
                 .antMatchers(HttpMethod.GET, "/{id}").permitAll()
+                .antMatchers(HttpMethod.POST, "/user").permitAll()
                 .anyRequest().authenticated();
         http.cors().configurationSource(request -> {
             CorsConfiguration corsConfiguration = new CorsConfiguration();

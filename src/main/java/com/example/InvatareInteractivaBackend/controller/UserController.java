@@ -48,6 +48,7 @@ public class UserController {
         return userService.isActive(authRequest);
     }
 
+    @CrossOrigin("*")
     @RequestMapping(value="/user", method = RequestMethod.POST)
     public UserDTO createUserDTO(@RequestBody UserDTO userDTO) throws Exception, UserNotFoundException {
         User user = this.userService.convertDtoToEntity(userDTO);
