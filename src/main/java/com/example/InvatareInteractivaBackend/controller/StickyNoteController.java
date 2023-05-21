@@ -1,6 +1,9 @@
 package com.example.InvatareInteractivaBackend.controller;
 
+import com.example.InvatareInteractivaBackend.DTO.StickyDTO;
+import com.example.InvatareInteractivaBackend.model.Category;
 import com.example.InvatareInteractivaBackend.model.StickyNote;
+import com.example.InvatareInteractivaBackend.service.CategoryService;
 import com.example.InvatareInteractivaBackend.service.StickyNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,9 @@ public class StickyNoteController {
     @Autowired
     private StickyNoteService stickyNoteService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @CrossOrigin("*")
     @GetMapping("/sticky-notes")
     public ResponseEntity<List<StickyNote>> getAllStickyNotes() {
@@ -26,10 +32,22 @@ public class StickyNoteController {
 
     @CrossOrigin("*")
     @GetMapping("/{id}")
-    public ResponseEntity<StickyNote> getStickyNoteById(@PathVariable Long id) {
-        Optional<StickyNote> stickyNote = stickyNoteService.getStickyNoteById(id);
-        if (stickyNote.isPresent()) {
-            return new ResponseEntity<>(stickyNote.get(), HttpStatus.OK);
+    public ResponseEntity<StickyDTO> getStickyNoteById(@PathVariable Long id) {
+        Optional<StickyNote> optionalStickyNote = stickyNoteService.getStickyNoteById(id);
+        if (optionalStickyNote.isPresent()) {
+            StickyNote stickyNote = optionalStickyNote.get();
+            Optional<Category> optionalCategory = categoryService.getCategoryById(stickyNote.getCategory().getId());
+            if(optionalCategory.isPresent()) {
+                Category category = optionalCategory.get();
+                StickyDTO stickyDTO = new StickyDTO();
+                stickyDTO.setId(stickyNote.getId());
+                stickyDTO.setTitle(stickyNote.getTitle());
+                stickyDTO.setDescription(stickyNote.getDescription());
+                stickyDTO.setCategoryName(category.getName());
+                return new ResponseEntity<>(stickyDTO, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
