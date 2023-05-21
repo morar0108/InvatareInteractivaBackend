@@ -22,6 +22,6 @@ public class UserDTO {
     private String username;
     private String password;
     private String token;
-    private boolean active;
+    private boolean active = true;
 
 }
