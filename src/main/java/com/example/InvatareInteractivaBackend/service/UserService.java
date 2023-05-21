@@ -34,7 +34,6 @@ public class UserService {
 
 
     public User saveUser(User user) throws Exception, UserNotFoundException {
-        user.setUsername(generateUsername(user.getFirstName(), user.getLastName()));
         String notEncodedPassword = user.getPassword();
         String encodedPassword = Hasher.hash(user.getPassword());
         user.setPassword(encodedPassword);
@@ -246,22 +245,5 @@ public class UserService {
                         secretKey.getBytes()).compact();
         return token;
     }
-
-    public String generateUsername(String firstname,String lastname) {
-        String username = "";
-        if (lastname.length() < 5) {
-            username += lastname;
-        } else {
-            username += lastname.substring(0, 5);
-        }
-        username += firstname.substring(0, 1);
-        int count = 1;
-        while (userRepository.findByUsername(username) != null || count == firstname.length() - 1) {
-            username += firstname.substring(count, count + 1);
-            count++;
-        }
-        return username.toLowerCase();
-    }
-
 
 }

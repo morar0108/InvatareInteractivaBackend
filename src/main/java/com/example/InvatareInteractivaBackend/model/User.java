@@ -33,7 +33,7 @@ public class User {
     private Long id;
 
     @Column(name="active", nullable = true)
-    private boolean active = false;
+    private boolean active = true;
 
     @Column(name="gender", nullable = true)
     private String gender;
